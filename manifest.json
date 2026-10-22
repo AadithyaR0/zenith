@@ -1,0 +1,26 @@
+{
+  "name": "Zenith — Mindful Strength & Health",
+  "short_name": "Zenith",
+  "description": "Warm, offline-first health, nutrition, weight EMA trend, and habit tracker for lifters.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F6F3EC",
+  "theme_color": "#F6F3EC",
+  "categories": ["health", "fitness", "lifestyle"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%2322201D'/%3E%3Ccircle cx='96' cy='96' r='56' fill='none' stroke='%23C86D51' stroke-width='12' stroke-linecap='round' stroke-dasharray='260 100'/%3E%3Cpath d='M68 108 L88 84 L104 98 L126 72' fill='none' stroke='%236B9075' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='126' cy='72' r='6' fill='%23D49A45'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%2322201D'/%3E%3Ccircle cx='256' cy='256' r='150' fill='none' stroke='%23C86D51' stroke-width='32' stroke-linecap='round' stroke-dasharray='700 260'/%3E%3Cpath d='M180 288 L234 224 L278 260 L336 192' fill='none' stroke='%236B9075' stroke-width='26' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='336' cy='192' r='16' fill='%23D49A45'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
