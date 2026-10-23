@@ -1,615 +1,1347 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Zenith — Mindful Health &amp; Strength</title>
+  <title>Zenith — Mindful Strength &amp; Longevity</title>
+  <meta name="description" content="Warm, tactile, offline-first iOS health, food, weight EMA trend, and visual habit tracker for experienced lifters.">
 
-  <!-- iOS PWA Standalone Directives -->
+  <!-- iOS Safari Home Screen Web App Meta Configuration -->
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Zenith">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#F6F3EC" id="meta-theme-color">
+  <meta name="theme-color" content="#040507" id="metaThemeColor">
   <meta name="format-detection" content="telephone=no">
 
-  <!-- Embedded Offline Apple Touch Icon -->
-  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' fill='%2322201D'/%3E%3Ccircle cx='90' cy='90' r='52' fill='none' stroke='%23C86D51' stroke-width='12' stroke-linecap='round' stroke-dasharray='240 90'/%3E%3Cpath d='M64 102 L82 78 L98 92 L118 68' fill='none' stroke='%236B9075' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='118' cy='68' r='6' fill='%23D49A45'/%3E%3C/svg%3E">
+  <!-- Relative PWA Manifest & Embedded Zero-Dependency Touch Icons -->
   <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230D1118'/%3E%3Cstop offset='100%25' stop-color='%23040507'/%3E%3C/linearGradient%3E%3ClinearGradient id='ring1' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FF8A65'/%3E%3Cstop offset='100%25' stop-color='%23E65C40'/%3E%3C/linearGradient%3E%3ClinearGradient id='ring2' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%235CE1A8'/%3E%3Cstop offset='100%25' stop-color='%232EAE7D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' rx='44' fill='url(%23bg)'/%3E%3Ccircle cx='96' cy='96' r='64' fill='none' stroke='%2318202C' stroke-width='13'/%3E%3Cpath d='M96 32 A64 64 0 1 1 38 124' fill='none' stroke='url(%23ring1)' stroke-width='13' stroke-linecap='round'/%3E%3Ccircle cx='96' cy='96' r='43' fill='none' stroke='url(%23ring2)' stroke-width='11' stroke-dasharray='195 85' stroke-linecap='round'/%3E%3Ccircle cx='96' cy='96' r='13' fill='%23F7B955'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%230D1118'/%3E%3Cstop offset='100%25' stop-color='%23040507'/%3E%3C/linearGradient%3E%3ClinearGradient id='ring1' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FF8A65'/%3E%3Cstop offset='100%25' stop-color='%23E65C40'/%3E%3C/linearGradient%3E%3ClinearGradient id='ring2' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%235CE1A8'/%3E%3Cstop offset='100%25' stop-color='%232EAE7D'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='192' height='192' rx='44' fill='url(%23bg)'/%3E%3Ccircle cx='96' cy='96' r='64' fill='none' stroke='%2318202C' stroke-width='13'/%3E%3Cpath d='M96 32 A64 64 0 1 1 38 124' fill='none' stroke='url(%23ring1)' stroke-width='13' stroke-linecap='round'/%3E%3Ccircle cx='96' cy='96' r='43' fill='none' stroke='url(%23ring2)' stroke-width='11' stroke-dasharray='195 85' stroke-linecap='round'/%3E%3Ccircle cx='96' cy='96' r='13' fill='%23F7B955'/%3E%3C/svg%3E">
+
+  <!-- Local Stylesheet -->
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <div id="app-shell" class="app-shell">
-    <!-- Top Safe-Area Dynamic Header -->
+  <!-- Shared SVG Gradient Defs for Living Macro Rings -->
+  <svg width="0" height="0" style="position:absolute;pointer-events:none;" aria-hidden="true">
+    <defs>
+      <linearGradient id="calGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FF9A76"/>
+        <stop offset="100%" stop-color="#E05A3F"/>
+      </linearGradient>
+      <linearGradient id="proGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#7AF2BE"/>
+        <stop offset="100%" stop-color="#2E9E73"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <!-- Instant Visual Feedback Pill Toast -->
+  <div id="toastBanner" class="toast-container" role="status" aria-live="polite">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 6 9 17l-5-5"/>
+    </svg>
+    <span id="toastMessageText">Saved to offline vault</span>
+  </div>
+
+  <div class="app-shell">
+    <!-- DYNAMIC HEADER (Editorial Serif Title + Italic Stoic Subtitle + Technical Mono Date) -->
     <header class="app-header">
-      <div class="header-titles">
-        <p id="header-date" class="header-date">THURSDAY, OCT 22</p>
-        <h1 id="header-greeting" class="header-greeting">Good evening</h1>
-        <p id="header-subtitle" class="header-subtitle">Consistency compounds quietly.</p>
+      <div class="header-greeting-wrap">
+        <div class="header-date-row">
+          <span id="headerDateText">Friday, Oct 23</span>
+          <span class="offline-badge" id="offlineStatusBadge" title="100% Offline Vault Ready">
+            <span class="offline-dot"></span>
+            <span id="offlineStatusText">Offline Ready</span>
+          </span>
+        </div>
+        <h1 class="header-title" id="headerGreeting">Good evening</h1>
+        <p class="header-subtitle" id="headerSubtitle">Consistency compounds quietly.</p>
       </div>
+
       <div class="header-actions">
-        <button type="button" id="btn-theme-toggle" class="icon-btn" aria-label="Toggle Theme">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        <button type="button" class="icon-btn spring-btn" id="themeToggleBtn" aria-label="Cycle color theme" title="Switch Obsidian Black / Linen Light / Auto">
+          <svg id="themeIconSun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
           </svg>
         </button>
-        <button type="button" id="btn-open-settings" class="icon-btn" aria-label="Targets &amp; Settings">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="3"></circle>
-            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        <button type="button" class="icon-btn spring-btn" id="openSettingsSheetBtn" aria-label="Open targets and settings" title="Targets &amp; Preferences">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
           </svg>
         </button>
       </div>
     </header>
 
-    <!-- Backup Eviction Warning Banner (Hidden if backed up within 30 days) -->
-    <div id="backup-warning-banner" class="backup-banner hidden" role="button" tabindex="0">
-      <div class="backup-banner-content">
-        <span class="pulse-dot amber"></span>
-        <span id="backup-warning-text">Vault backup overdue. Tap to protect offline history.</span>
-      </div>
-      <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <polyline points="9 18 15 12 9 6"></polyline>
-      </svg>
-    </div>
-
-    <!-- Main Scrollable Viewport -->
+    <!-- MAIN 4-TAB VIEWS CONTAINER -->
     <main class="views-container">
-
-      <!-- ==========================================
-           TAB 1: TODAY (DASHBOARD & FAST LOG)
-           ========================================== -->
+      <!-- ====================================================================
+           TAB 1: TODAY (TINY RESIZE & REORDER TOGGLES ON TOP OF EACH CARD)
+           ==================================================================== -->
       <section id="view-today" class="tab-view active" aria-label="Today Dashboard">
-        <!-- Hero Fast-Log Bar -->
-        <div class="fast-log-bar">
-          <button type="button" class="fast-log-btn primary-terracotta" id="btn-fast-fuel">
-            <div class="fast-log-icon">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-              </svg>
-            </div>
-            <div class="fast-log-copy">
-              <span class="fast-log-title">Log Fuel</span>
-              <span class="fast-log-sub">1-tap kcal &amp; protein</span>
-            </div>
-          </button>
+        <!-- Reorderable & Resizable Dashboard Widgets Stack -->
+        <div class="dashboard-widgets-stack" id="dashboardWidgetsStack">
+          <!-- ================================================================
+               WIDGET 1: QUICK LOG BAR (Full / Mid / Mini + Up/Down)
+               ================================================================ -->
+          <div class="dash-widget" id="widgetFastLog" data-widget-id="fastlog" data-size="expanded">
+            <article class="zen-card" id="todayFastLogWrapperCard" style="padding: 14px 16px;">
+              <div class="card-header" style="margin-bottom: 10px;">
+                <h2 class="card-title" style="font-size: 0.94rem;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 5v14M5 12h14"/>
+                  </svg>
+                  Quick Log
+                </h2>
+                <div class="card-header-right">
+                  <div class="card-micro-controls" role="group" aria-label="Quick Log card size and position">
+                    <button type="button" class="micro-resize-btn" data-cycle-widget="fastlog" title="Tap to cycle size: Full / Mid / Mini">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                      <span class="micro-size-label">Full</span>
+                    </button>
+                    <button type="button" class="micro-move-btn" data-move-widget="fastlog" data-dir="-1" aria-label="Move card up" title="Move card up">↑</button>
+                    <button type="button" class="micro-move-btn" data-move-widget="fastlog" data-dir="1" aria-label="Move card down" title="Move card down">↓</button>
+                  </div>
+                </div>
+              </div>
 
-          <button type="button" class="fast-log-btn primary-sage" id="btn-fast-weight">
-            <div class="fast-log-icon">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 3v18h18"></path>
-                <path d="m19 9-5 5-4-4-3 3"></path>
-              </svg>
-            </div>
-            <div class="fast-log-copy">
-              <span class="fast-log-title">Log Weight</span>
-              <span id="fast-weight-sub" class="fast-log-sub">Smart pre-fill</span>
-            </div>
-          </button>
+              <!-- Expanded & Compact Body (CSS styles .fast-log-grid for both Full and Mid) -->
+              <div class="widget-body-expanded">
+                <div class="fast-log-grid">
+                  <button type="button" class="fast-log-card weight-fast-card" id="fastLogWeightBtn">
+                    <div class="fast-log-top">
+                      <span class="fast-log-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M3 3v18h18"/>
+                          <path d="m19 9-5 5-4-4-3 3"/>
+                        </svg>
+                      </span>
+                      <span class="fast-log-plus">+</span>
+                    </div>
+                    <div>
+                      <div class="fast-log-label">Log Weight</div>
+                      <div class="fast-log-value num" id="fastWeightVal">--</div>
+                      <div class="fast-log-sub" id="fastWeightSub">Tap for 1-sec pre-fill</div>
+                    </div>
+                  </button>
+
+                  <button type="button" class="fast-log-card food-fast-card" id="fastLogFuelBtn">
+                    <div class="fast-log-top">
+                      <span class="fast-log-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                          <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                          <line x1="6" y1="1" x2="6" y2="4"/>
+                          <line x1="10" y1="1" x2="10" y2="4"/>
+                          <line x1="14" y1="1" x2="14" y2="4"/>
+                        </svg>
+                      </span>
+                      <span class="fast-log-plus">+</span>
+                    </div>
+                    <div>
+                      <div class="fast-log-label">Log Food</div>
+                      <div class="fast-log-value num" id="fastFuelVal">0 kcal</div>
+                      <div class="fast-log-sub" id="fastFuelSub">Simple or multi-item meal</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Compact Body (Mid Mode) -->
+              <div class="widget-body-compact">
+                <div class="fast-log-grid">
+                  <button type="button" class="fast-log-card weight-fast-card" id="fastLogWeightCompactBtn">
+                    <span class="fast-log-icon" style="width:32px;height:32px;">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
+                      </svg>
+                    </span>
+                    <div style="min-width:0;">
+                      <div class="fast-log-label">+ Weight</div>
+                      <div class="fast-log-value num" id="fastWeightCompactVal">--</div>
+                    </div>
+                  </button>
+                  <button type="button" class="fast-log-card food-fast-card" id="fastLogFuelCompactBtn">
+                    <span class="fast-log-icon" style="width:32px;height:32px;">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                      </svg>
+                    </span>
+                    <div style="min-width:0;">
+                      <div class="fast-log-label">+ Food</div>
+                      <div class="fast-log-value num" id="fastFuelCompactVal">0 kcal</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Short Summary Line (Mini Mode) -->
+              <div class="widget-summary-line">
+                <div class="summary-line-metrics">
+                  <span class="num" id="summaryFastLogText">Scale: -- • Food: 0 kcal</span>
+                </div>
+                <div style="display:flex;gap:5px;">
+                  <button type="button" class="summary-line-pill spring-btn" id="summaryQuickWeightBtn">+ Weight</button>
+                  <button type="button" class="summary-line-pill spring-btn" id="summaryQuickFoodBtn" style="background:var(--accent-terracotta-soft);color:var(--accent-terracotta);border-color:var(--accent-terracotta-border);">+ Food</button>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- ================================================================
+               WIDGET 2: DAILY NUTRITION RINGS (Full / Mid / Mini + Up/Down)
+               ================================================================ -->
+          <div class="dash-widget" id="widgetMacros" data-widget-id="macros" data-size="expanded">
+            <article class="zen-card" id="todayMacroCard">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <circle cx="12" cy="12" r="6"/>
+                    <circle cx="12" cy="12" r="2"/>
+                  </svg>
+                  Daily Nutrition
+                </h2>
+                <div class="card-header-right">
+                  <button type="button" class="text-link-btn spring-btn" id="editTargetsQuickBtn">Targets</button>
+                  <div class="card-micro-controls" role="group" aria-label="Nutrition card size and position">
+                    <button type="button" class="micro-resize-btn" data-cycle-widget="macros" title="Tap to cycle size: Full / Mid / Mini">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                      <span class="micro-size-label">Full</span>
+                    </button>
+                    <button type="button" class="micro-move-btn" data-move-widget="macros" data-dir="-1" aria-label="Move card up" title="Move card up">↑</button>
+                    <button type="button" class="micro-move-btn" data-move-widget="macros" data-dir="1" aria-label="Move card down" title="Move card down">↓</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- EXPANDED BODY (Full): Dual Circular SVG Rings -->
+              <div class="widget-body-expanded">
+                <div class="macro-rings-grid">
+                  <!-- Calories Ring -->
+                  <div class="macro-ring-box" id="calRingCardBox">
+                    <div class="ring-svg-wrap">
+                      <svg class="ring-svg" viewBox="0 0 120 120">
+                        <circle class="ring-track-circle" cx="60" cy="60" r="48"/>
+                        <circle class="ring-progress-circle ring-calories" id="calRingCircle" cx="60" cy="60" r="48" stroke-dasharray="301.59" stroke-dashoffset="301.59"/>
+                      </svg>
+                      <div class="ring-center-content">
+                        <span class="ring-value num" id="todayCalActual">0</span>
+                        <span class="ring-unit" id="todayCalTargetText">/ 2,450 kcal</span>
+                      </div>
+                    </div>
+                    <div class="macro-pill-bar">
+                      <div class="macro-pill-fill cal-fill" id="calPillFill" style="width: 0%;"></div>
+                    </div>
+                    <div class="macro-ring-footer">
+                      <span class="macro-ring-title">Calories</span>
+                      <span class="macro-ring-rem num" id="todayCalRemaining">2,450 kcal left</span>
+                    </div>
+                  </div>
+
+                  <!-- Protein Ring -->
+                  <div class="macro-ring-box" id="proRingCardBox">
+                    <div class="ring-svg-wrap">
+                      <svg class="ring-svg" viewBox="0 0 120 120">
+                        <circle class="ring-track-circle" cx="60" cy="60" r="48"/>
+                        <circle class="ring-progress-circle ring-protein" id="proRingCircle" cx="60" cy="60" r="48" stroke-dasharray="301.59" stroke-dashoffset="301.59"/>
+                      </svg>
+                      <div class="ring-center-content">
+                        <span class="ring-value num" id="todayProActual">0g</span>
+                        <span class="ring-unit" id="todayProTargetText">/ 185g pro</span>
+                      </div>
+                    </div>
+                    <div class="macro-pill-bar">
+                      <div class="macro-pill-fill pro-fill" id="proPillFill" style="width: 0%;"></div>
+                    </div>
+                    <div class="macro-ring-footer">
+                      <span class="macro-ring-title">Protein</span>
+                      <span class="macro-ring-rem num" id="todayProRemaining">185g remaining</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- COMPACT BODY (Mid): Horizontal Progress Bars without SVG Ring Height -->
+              <div class="widget-body-compact">
+                <div class="compact-macro-grid">
+                  <div class="compact-macro-box">
+                    <div class="compact-macro-top">
+                      <span class="compact-macro-label">Calories</span>
+                      <span class="compact-macro-val num" id="compactCalVal">0 / 2,450</span>
+                    </div>
+                    <div class="macro-pill-bar">
+                      <div class="macro-pill-fill cal-fill" id="compactCalFill" style="width: 0%;"></div>
+                    </div>
+                    <span class="macro-ring-rem num" id="compactCalRem" style="font-size:0.68rem;">2,450 kcal left</span>
+                  </div>
+                  <div class="compact-macro-box">
+                    <div class="compact-macro-top">
+                      <span class="compact-macro-label">Protein</span>
+                      <span class="compact-macro-val num" id="compactProVal">0g / 185g</span>
+                    </div>
+                    <div class="macro-pill-bar">
+                      <div class="macro-pill-fill pro-fill" id="compactProFill" style="width: 0%;"></div>
+                    </div>
+                    <span class="macro-ring-rem num" id="compactProRem" style="font-size:0.68rem;">185g remaining</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SHORT SUMMARY BODY (Mini): Single-Line Digest -->
+              <div class="widget-summary-line">
+                <div class="summary-line-metrics">
+                  <span class="num" id="summaryMacrosText">0 / 2,450 kcal • 0g / 185g P</span>
+                </div>
+                <span class="summary-line-pill num" id="summaryMacrosRemPill">2,450 kcal left</span>
+              </div>
+            </article>
+          </div>
+
+          <!-- ================================================================
+               WIDGET 3: DAILY HABITS & RHYTHM (Full / Mid / Mini + Up/Down)
+               ================================================================ -->
+          <div class="dash-widget" id="widgetHabits" data-widget-id="habits" data-size="expanded">
+            <article class="zen-card" id="todayHabitsCard">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                  <span>Habits &amp; Rhythm</span>
+                  <button type="button" class="info-trigger-btn" data-info="habit-adherence" aria-label="How habit adherence works" title="How habit adherence is computed">i</button>
+                </h2>
+                <div class="card-header-right">
+                  <span class="card-meta num" id="todayHabitWeekSummary">0/4</span>
+                  <button type="button" class="text-link-btn spring-btn" id="goToHabitsTabBtn">Studio</button>
+                  <div class="card-micro-controls" role="group" aria-label="Habits card size and position">
+                    <button type="button" class="micro-resize-btn" data-cycle-widget="habits" title="Tap to cycle size: Full / Mid / Mini">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                      <span class="micro-size-label">Full</span>
+                    </button>
+                    <button type="button" class="micro-move-btn" data-move-widget="habits" data-dir="-1" aria-label="Move card up" title="Move card up">↑</button>
+                    <button type="button" class="micro-move-btn" data-move-widget="habits" data-dir="1" aria-label="Move card down" title="Move card down">↓</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- EXPANDED BODY (Full): Full Habit Cards with 7-Day M T W T F S S Strips -->
+              <div class="widget-body-expanded">
+                <div class="habit-cards-stack" id="todayHabitCapsuleList">
+                  <!-- Dynamically populated by app.js -->
+                </div>
+              </div>
+
+              <!-- COMPACT BODY (Mid): 2x2 Quick-Check Pill Grid -->
+              <div class="widget-body-compact">
+                <div class="compact-habit-grid" id="todayHabitCompactGrid">
+                  <!-- Dynamically populated by app.js -->
+                </div>
+              </div>
+
+              <!-- SHORT SUMMARY BODY (Mini): Single-Line Habit Digest -->
+              <div class="widget-summary-line">
+                <div class="summary-line-metrics">
+                  <span class="num" id="summaryHabitsText">0 / 4 habits completed today</span>
+                </div>
+                <span class="summary-line-pill num" id="summaryHabitsScorePill">100% 30d</span>
+              </div>
+            </article>
+          </div>
+
+          <!-- ================================================================
+               WIDGET 4: DAILY SNAPSHOT (Full / Mid / Mini + Up/Down)
+               ================================================================ -->
+          <div class="dash-widget" id="widgetSnapshot" data-widget-id="snapshot" data-size="expanded">
+            <article class="zen-card" id="todayEodCard">
+              <div class="card-header">
+                <h2 class="card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                  </svg>
+                  Daily Snapshot
+                </h2>
+                <div class="card-header-right">
+                  <span class="card-meta" id="eodDateLabel">Ledger</span>
+                  <div class="card-micro-controls" role="group" aria-label="Snapshot card size and position">
+                    <button type="button" class="micro-resize-btn" data-cycle-widget="snapshot" title="Tap to cycle size: Full / Mid / Mini">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
+                      <span class="micro-size-label">Full</span>
+                    </button>
+                    <button type="button" class="micro-move-btn" data-move-widget="snapshot" data-dir="-1" aria-label="Move card up" title="Move card up">↑</button>
+                    <button type="button" class="micro-move-btn" data-move-widget="snapshot" data-dir="1" aria-label="Move card down" title="Move card down">↓</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- EXPANDED BODY (Full): 3-Pillar Grid + Consistency Banner -->
+              <div class="widget-body-expanded">
+                <div class="eod-summary-grid">
+                  <div class="eod-stat-box">
+                    <div class="eod-stat-label">Calories</div>
+                    <div class="eod-stat-value num" id="eodTotalCalories">0 kcal</div>
+                  </div>
+                  <div class="eod-stat-box">
+                    <div class="eod-stat-label">Protein</div>
+                    <div class="eod-stat-value num" id="eodTotalProtein">0 g</div>
+                  </div>
+                  <div class="eod-stat-box">
+                    <div class="eod-stat-label">
+                      <span>Protein / kg</span>
+                      <button type="button" class="info-trigger-btn" data-info="protein-per-kg" aria-label="How Protein per kg is calculated" style="width:17px;height:17px;font-size:0.62rem;">i</button>
+                    </div>
+                    <div class="eod-stat-value num" id="eodProteinPerKg">-- g/kg</div>
+                  </div>
+                </div>
+                <div class="consistency-status-banner" id="eodConsistencyBanner">
+                  <span id="eodConsistencyText">Ready for today's logs</span>
+                  <span class="num" id="eodEmaDeltaText">EMA: --</span>
+                </div>
+              </div>
+
+              <!-- COMPACT BODY (Mid): Condensed 3-Pillar Strip -->
+              <div class="widget-body-compact">
+                <div class="eod-summary-grid" style="margin-bottom:0;">
+                  <div class="eod-stat-box" style="padding:10px 8px;">
+                    <div class="eod-stat-label">Intake</div>
+                    <div class="eod-stat-value num" id="compactEodCal" style="font-size:0.9rem;">0 kcal</div>
+                  </div>
+                  <div class="eod-stat-box" style="padding:10px 8px;">
+                    <div class="eod-stat-label">Protein</div>
+                    <div class="eod-stat-value num" id="compactEodPro" style="font-size:0.9rem;">0 g</div>
+                  </div>
+                  <div class="eod-stat-box" style="padding:10px 8px;">
+                    <div class="eod-stat-label">Ratio</div>
+                    <div class="eod-stat-value num" id="compactEodRatio" style="font-size:0.9rem;">-- g/kg</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- SHORT SUMMARY BODY (Mini): Single-Line Snapshot -->
+              <div class="widget-summary-line">
+                <div class="summary-line-metrics">
+                  <span class="num" id="summarySnapshotText">Protein: -- g/kg • EMA: --</span>
+                </div>
+                <span class="summary-line-pill num" id="summarySnapshotBadge">Active</span>
+              </div>
+            </article>
+          </div>
         </div>
-
-        <!-- Daily Macro Rings Card -->
-        <article class="card macro-hero-card">
-          <div class="card-header">
-            <h2 class="card-title">Daily Fuel</h2>
-            <span id="today-macro-status-pill" class="pill-badge">On Track</span>
-          </div>
-
-          <div class="macro-rings-grid">
-            <!-- Calories Ring -->
-            <div class="macro-ring-block" id="card-ring-kcal">
-              <div class="ring-svg-wrap">
-                <svg class="progress-ring" viewBox="0 0 120 120">
-                  <circle class="ring-track" cx="60" cy="60" r="50"></circle>
-                  <circle id="ring-kcal-fill" class="ring-fill terracotta" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
-                </svg>
-                <div class="ring-center">
-                  <span id="today-kcal-actual" class="ring-value">0</span>
-                  <span class="ring-unit">kcal</span>
-                </div>
-              </div>
-              <div class="macro-meta">
-                <p class="macro-target">Target <span id="today-kcal-target">2,500</span></p>
-                <p id="today-kcal-remaining" class="macro-remaining">2,500 left</p>
-              </div>
-            </div>
-
-            <!-- Protein Ring -->
-            <div class="macro-ring-block" id="card-ring-protein">
-              <div class="ring-svg-wrap">
-                <svg class="progress-ring" viewBox="0 0 120 120">
-                  <circle class="ring-track" cx="60" cy="60" r="50"></circle>
-                  <circle id="ring-protein-fill" class="ring-fill sage" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16"></circle>
-                </svg>
-                <div class="ring-center">
-                  <span id="today-protein-actual" class="ring-value">0g</span>
-                  <span class="ring-unit">protein</span>
-                </div>
-              </div>
-              <div class="macro-meta">
-                <p class="macro-target">Target <span id="today-protein-target">180g</span></p>
-                <p id="today-protein-remaining" class="macro-remaining">180g left</p>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Habit Capsule Bar -->
-        <article class="card">
-          <div class="card-header">
-            <div>
-              <h2 class="card-title">Daily Practices</h2>
-              <p class="card-subtitle">Tap to toggle today's completion</p>
-            </div>
-            <span id="today-habit-progress-badge" class="pill-badge neutral">0/4 today</span>
-          </div>
-          <div id="today-habits-capsule-list" class="habit-capsule-grid">
-            <!-- Dynamically populated by app.js -->
-          </div>
-        </article>
-
-        <!-- End-of-Day Summary & Signal Card -->
-        <article class="card summary-card">
-          <div class="card-header">
-            <h2 class="card-title">End-of-Day Pulse</h2>
-            <span id="eod-consistency-badge" class="pill-badge sage">Steady</span>
-          </div>
-          <div class="eod-metrics-row">
-            <div class="eod-metric">
-              <span class="eod-label">Energy Balance</span>
-              <span id="eod-kcal-summary" class="eod-val">0 / 2,500 kcal</span>
-            </div>
-            <div class="eod-metric">
-              <span class="eod-label">Protein Floor</span>
-              <span id="eod-protein-summary" class="eod-val">0 / 180g</span>
-            </div>
-            <div class="eod-metric">
-              <span class="eod-label">7D EMA Trend</span>
-              <span id="eod-weight-summary" class="eod-val">--</span>
-            </div>
-          </div>
-          <p id="eod-narrative" class="eod-narrative">Log your first meal or scale check-in to anchor the day.</p>
-        </article>
       </section>
 
-      <!-- ==========================================
-           TAB 2: FUEL & NUTRITION (NO-NONSENSE MACROS)
-           ========================================== -->
-      <section id="view-fuel" class="tab-view" aria-label="Fuel and Nutrition">
-        <!-- Day Selector Toggle (Today vs Yesterday Glance) -->
-        <div class="segmented-control" role="tablist">
-          <button type="button" id="btn-fuel-day-today" class="segment-btn active" data-day="today">Today</button>
-          <button type="button" id="btn-fuel-day-yesterday" class="segment-btn" data-day="yesterday">Yesterday Glance</button>
+      <!-- ====================================================================
+           TAB 2: FOOD & NUTRITION (SIMPLE ENTRY + MULTI-ITEM MEAL BUILDER + MEMORY)
+           ==================================================================== -->
+      <section id="view-fuel" class="tab-view" aria-label="Food and Nutrition">
+        <!-- Day Switcher (Today vs Previous Day Glance) -->
+        <div class="segmented-control" role="tablist" aria-label="Nutrition Day Selector">
+          <button type="button" class="seg-btn active" id="fuelDayTodayBtn" role="tab" aria-selected="true">Today's Food</button>
+          <button type="button" class="seg-btn" id="fuelDayYesterdayBtn" role="tab" aria-selected="false">Yesterday Glance</button>
         </div>
 
-        <!-- Quick Macro Bank Card -->
-        <article class="card">
+        <!-- Quick Macro Bank -->
+        <article class="zen-card" id="fuelBankCard">
           <div class="card-header">
-            <h2 id="fuel-bank-title" class="card-title">Today's Macro Bank</h2>
-            <button type="button" id="btn-fuel-add-inline" class="pill-action-btn">+ Quick Entry</button>
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="5" width="20" height="14" rx="3"/>
+                <line x1="2" y1="10" x2="22" y2="10"/>
+              </svg>
+              <span id="fuelBankTitle">Daily Macro Bank</span>
+            </h2>
+            <span class="card-meta num" id="fuelMealsLoggedCount">0 meals</span>
+          </div>
+          <div class="macro-bank-grid">
+            <div class="bank-pillar">
+              <div class="bank-pillar-label">Calories Left</div>
+              <div class="bank-pillar-val cal-color num" id="bankCalRemaining">2,450</div>
+              <div class="bank-pillar-sub num" id="bankCalSub">0 / 2,450 kcal logged</div>
+            </div>
+            <div class="bank-pillar">
+              <div class="bank-pillar-label">Protein Left</div>
+              <div class="bank-pillar-val pro-color num" id="bankProRemaining">185g</div>
+              <div class="bank-pillar-sub num" id="bankProSub">0 / 185g logged</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Dual-Mode Smart Food & Meal Logger -->
+        <article class="zen-card" id="fuelInlineFormCard">
+          <div class="card-header">
+            <h2 class="card-title" id="fuelFormHeading">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14"/>
+              </svg>
+              Log Food or Build Meal
+            </h2>
+            <button type="button" class="text-link-btn spring-btn" id="instantTapModeBtn" title="Toggle whether increment pills save immediately or stack in form">1-Tap Instant: OFF</button>
           </div>
 
-          <div class="pill-bars-stack">
-            <div class="pill-bar-item">
-              <div class="pill-bar-labels">
-                <span class="pill-bar-name">Calories</span>
-                <span id="fuel-bar-kcal-numbers" class="pill-bar-numbers">0 / 2,500 kcal (2,500 left)</span>
+          <!-- Logger Mode Switcher: Simple Entry vs Multi-Ingredient Meal Builder -->
+          <div class="segmented-control" style="margin-bottom: 14px;" role="tablist" aria-label="Meal Logging Mode">
+            <button type="button" class="seg-btn active" id="mealModeSimpleBtn">Simple Entry</button>
+            <button type="button" class="seg-btn" id="mealModeBuilderBtn">Build Meal (Multi-Item)</button>
+          </div>
+
+          <!-- MODE A: SIMPLE FOOD ENTRY (Calories and/or Protein + Smart Memory Search) -->
+          <div id="simpleMealModeBox">
+            <div class="field-group food-memory-wrap">
+              <div class="quick-pills-label" style="margin-bottom: 4px;">
+                <label class="field-label" for="fuelNoteInput">Food Name / Search Memory</label>
+                <button type="button" class="text-link-btn spring-btn" id="fuelResetInputBtn">Clear</button>
               </div>
-              <div class="pill-bar-track">
-                <div id="fuel-bar-kcal-fill" class="pill-bar-fill terracotta" style="width: 0%"></div>
+              <input type="text" id="fuelNoteInput" class="zen-input" placeholder="Search remembered foods or type a name (e.g., Whey, Eggs)..." maxlength="120" autocomplete="off">
+              <div class="memory-suggestions-tray" id="fuelMemoryTray" aria-label="Remembered food suggestions">
+                <!-- Dynamically populated with remembered food chips -->
               </div>
             </div>
 
-            <div class="pill-bar-item">
-              <div class="pill-bar-labels">
-                <span class="pill-bar-name">Protein</span>
-                <span id="fuel-bar-protein-numbers" class="pill-bar-numbers">0 / 180g (180g left)</span>
+            <div class="quick-pills-label">
+              <span>Quick Add Calories / Protein</span>
+              <span style="font-size:0.7rem;color:var(--text-muted);">Log kcal, protein, or both</span>
+            </div>
+            <div class="quick-pills-row">
+              <button type="button" class="pill-btn cal-pill" id="pillAdd250Cal">+250 kcal</button>
+              <button type="button" class="pill-btn cal-pill" id="pillAdd500Cal">+500 kcal</button>
+              <button type="button" class="pill-btn pro-pill" id="pillAdd25Pro">+25g protein</button>
+              <button type="button" class="pill-btn pro-pill" id="pillAdd50Pro">+50g protein</button>
+            </div>
+
+            <form id="fuelEntryForm" novalidate>
+              <input type="hidden" id="fuelEditIdInput" value="">
+              <div class="input-row-2col">
+                <div class="field-group">
+                  <label class="field-label" for="fuelCalInput">Calories (kcal — optional)</label>
+                  <input type="number" id="fuelCalInput" class="zen-input num" inputmode="numeric" placeholder="0" min="0" max="15000" step="10">
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="fuelProInput">Protein (g — optional)</label>
+                  <input type="number" id="fuelProInput" class="zen-input num" inputmode="numeric" placeholder="0" min="0" max="1000" step="5">
+                </div>
               </div>
-              <div class="pill-bar-track">
-                <div id="fuel-bar-protein-fill" class="pill-bar-fill sage" style="width: 0%"></div>
+              <button type="submit" class="primary-btn spring-btn" id="fuelSubmitBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6 9 17l-5-5"/>
+                </svg>
+                <span id="fuelSubmitBtnText">Add Food Entry</span>
+              </button>
+            </form>
+          </div>
+
+          <!-- MODE B: MULTI-INGREDIENT MEAL BUILDER (Combine Ingredients & Sum) -->
+          <div id="builderMealModeBox" style="display: none;">
+            <div class="field-group" style="margin-bottom: 10px;">
+              <label class="field-label" for="builderMealTitleInput">Meal Title</label>
+              <input type="text" id="builderMealTitleInput" class="zen-input" placeholder="e.g., Lunch, Post-Workout Bowl, Dinner" maxlength="80">
+            </div>
+
+            <div class="meal-builder-section">
+              <div class="field-group">
+                <label class="field-label" for="builderIngNameInput">Search or Type Ingredient</label>
+                <input type="text" id="builderIngNameInput" class="zen-input" placeholder="Type ingredient (e.g., Chicken, Rice, Olive Oil)..." maxlength="80" autocomplete="off">
+                <div class="memory-suggestions-tray" id="builderMemoryTray" aria-label="Tap a remembered food to add to meal">
+                  <!-- Tapping a chip adds or fills ingredient -->
+                </div>
+              </div>
+
+              <div class="input-row-2col" style="margin-bottom: 4px;">
+                <div class="field-group">
+                  <label class="field-label" for="builderIngCalInput">Calories (kcal)</label>
+                  <input type="number" id="builderIngCalInput" class="zen-input num" inputmode="numeric" placeholder="0" min="0" max="10000">
+                </div>
+                <div class="field-group">
+                  <label class="field-label" for="builderIngProInput">Protein (g)</label>
+                  <input type="number" id="builderIngProInput" class="zen-input num" inputmode="numeric" placeholder="0" min="0" max="500">
+                </div>
+              </div>
+
+              <button type="button" class="secondary-btn spring-btn" id="addIngredientToMealBtn">
+                + Add Ingredient to Meal
+              </button>
+
+              <!-- Running List of Added Ingredients -->
+              <div class="ingredient-draft-list" id="builderIngredientList"></div>
+
+              <!-- Live Summed Macros Bar -->
+              <div class="meal-builder-sum-bar">
+                <span id="builderSumCountText">0 ingredients</span>
+                <span class="num" id="builderSumMacrosText">Total: 0 kcal • 0g P</span>
               </div>
             </div>
+
+            <button type="button" class="primary-btn sage-btn spring-btn" id="saveBuiltMealBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5"/>
+              </svg>
+              Save Combined Meal to Log
+            </button>
           </div>
         </article>
 
         <!-- Chronological Timeline -->
-        <article class="card">
+        <article class="zen-card">
           <div class="card-header">
-            <h2 id="fuel-timeline-title" class="card-title">Chronological Log</h2>
-            <span id="fuel-entry-count" class="pill-badge neutral">0 entries</span>
+            <h2 class="card-title" id="fuelTimelineHeaderTitle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              Today's Food Log
+            </h2>
+            <span class="card-meta" id="fuelSwipeHint">Swipe left or tap to edit</span>
           </div>
-          <div id="fuel-timeline-list" class="timeline-list">
+          <div class="timeline-list" id="fuelTimelineList">
             <!-- Dynamically populated by app.js -->
           </div>
         </article>
       </section>
 
-      <!-- ==========================================
+      <!-- ====================================================================
            TAB 3: WEIGHT & TRENDS (SIGNAL OVER NOISE)
-           ========================================== -->
+           ==================================================================== -->
       <section id="view-weight" class="tab-view" aria-label="Weight and Trends">
-        <!-- Prominent Logger & Unit Toggle Header -->
-        <article class="card weight-hero-bar">
-          <div>
-            <span class="eyebrow-label">Scale &amp; Trend Signal</span>
-            <div class="weight-hero-numbers">
-              <span id="weight-hero-current" class="hero-big-num">--</span>
-              <span id="weight-hero-delta" class="delta-badge neutral">No trend yet</span>
+        <!-- Prominent Weight Logger Card -->
+        <article class="zen-card" id="weightLoggerCard">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/>
+                <circle cx="12" cy="8" r="3"/>
+              </svg>
+              Scale Weight Logger
+            </h2>
+            <div class="unit-toggle-pill" role="group" aria-label="Weight Unit">
+              <button type="button" class="unit-btn spring-btn active" id="unitKgBtn">kg</button>
+              <button type="button" class="unit-btn spring-btn" id="unitLbsBtn">lbs</button>
             </div>
           </div>
-          <div class="weight-hero-actions">
-            <button type="button" id="btn-unit-toggle" class="unit-toggle-btn" aria-label="Toggle kg or lbs">kg</button>
-            <button type="button" id="btn-weight-open-sheet" class="primary-pill-btn">+ Log</button>
+
+          <form id="weightEntryForm" novalidate>
+            <input type="hidden" id="weightEditIdInput" value="">
+            <div class="weight-input-stack">
+              <input type="number" id="weightValInput" class="zen-input weight-hero-input num" inputmode="decimal" step="0.1" min="25" max="600" placeholder="80.0" aria-label="Weight Value">
+              <div class="weight-stepper-grid">
+                <button type="button" class="stepper-btn" id="weightStepDownBig" aria-label="Decrease weight by 0.5">-0.5</button>
+                <button type="button" class="stepper-btn" id="weightStepDownSmall" aria-label="Decrease weight by 0.1">-0.1</button>
+                <button type="button" class="stepper-btn" id="weightStepUpSmall" aria-label="Increase weight by 0.1">+0.1</button>
+                <button type="button" class="stepper-btn" id="weightStepUpBig" aria-label="Increase weight by 0.5">+0.5</button>
+              </div>
+            </div>
+
+            <div class="input-row-2col" style="margin-bottom: 12px;">
+              <div class="field-group">
+                <label class="field-label" for="weightDateInput">Date</label>
+                <input type="date" id="weightDateInput" class="zen-input num">
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="weightNoteInput">Context Note</label>
+                <input type="text" id="weightNoteInput" class="zen-input" placeholder="Fasted morning, post-carb..." maxlength="80">
+              </div>
+            </div>
+
+            <button type="submit" class="primary-btn sage-btn spring-btn" id="weightSubmitBtn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 6 9 17l-5-5"/>
+              </svg>
+              <span id="weightSubmitBtnText">Save Scale Weight</span>
+            </button>
+          </form>
+        </article>
+
+        <!-- Custom Zero-Dependency High-DPI Canvas Chart -->
+        <article class="zen-card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"/>
+                <path d="m19 9-5 5-4-4-3 3"/>
+              </svg>
+              <span>7-Day EMA Signal vs. Scale</span>
+              <button type="button" class="info-trigger-btn" data-info="ema-signal" aria-label="How 7-Day EMA is calculated">i</button>
+            </h2>
+            <span class="card-meta num" id="chartScrubReadout">Touch chart to inspect</span>
+          </div>
+
+          <div class="timeframe-bar" role="tablist" aria-label="Chart Timeframe">
+            <button type="button" class="tf-btn spring-btn" id="tf7D" data-days="7">7D</button>
+            <button type="button" class="tf-btn spring-btn" id="tf14D" data-days="14">2W</button>
+            <button type="button" class="tf-btn spring-btn active" id="tf30D" data-days="30">1M</button>
+            <button type="button" class="tf-btn spring-btn" id="tf180D" data-days="180">6M</button>
+            <button type="button" class="tf-btn spring-btn" id="tf365D" data-days="365">1Y</button>
+          </div>
+
+          <div class="chart-canvas-wrap">
+            <canvas id="weightTrendCanvas" aria-label="Weight and 7-day EMA trend chart"></canvas>
+          </div>
+
+          <div class="chart-legend-row">
+            <div class="legend-items">
+              <span class="legend-item"><span class="legend-dot ema-dot"></span>7-Day EMA Trend</span>
+              <span class="legend-item"><span class="legend-dot raw-dot"></span>Raw Scale</span>
+              <span class="legend-item"><span class="legend-dot goal-dot"></span>Goal</span>
+            </div>
+            <span class="num" id="chartPointCountText">0 logs</span>
           </div>
         </article>
 
-        <!-- Custom Zero-Dependency Retina Canvas Chart -->
-        <article class="card chart-card">
-          <div class="chart-header">
-            <div class="chart-legend">
-              <span class="legend-item"><span class="legend-dot ema"></span>7D EMA Trend</span>
-              <span class="legend-item"><span class="legend-dot raw"></span>Scale Weight</span>
-            </div>
-            <span id="chart-scrub-readout" class="chart-readout">Tap chart to inspect</span>
-          </div>
-
-          <div class="canvas-wrapper">
-            <canvas id="weight-chart-canvas" height="220"></canvas>
-          </div>
-
-          <!-- Timeframe Toggles -->
-          <div class="timeframe-bar" role="group" aria-label="Chart Timeframe">
-            <button type="button" class="tf-btn" data-days="7">7D</button>
-            <button type="button" class="tf-btn" data-days="14">2W</button>
-            <button type="button" class="tf-btn active" data-days="30">1M</button>
-            <button type="button" class="tf-btn" data-days="180">6M</button>
-            <button type="button" class="tf-btn" data-days="365">1Y</button>
-          </div>
-        </article>
-
-        <!-- 4 Trend Metrics Cards -->
-        <div class="metrics-grid-2x2">
-          <div class="metric-box">
+        <!-- Trend Metrics 4-Card Grid (With Info Popups) -->
+        <div class="trend-metrics-grid">
+          <div class="metric-card">
             <span class="metric-label">Current Scale</span>
-            <span id="metric-current-weight" class="metric-value">--</span>
-            <span id="metric-current-date" class="metric-sub">Latest check-in</span>
+            <span class="metric-val num" id="metricCurrentWeight">--</span>
+            <span class="metric-delta" id="metricCurrentDate">No logs yet</span>
           </div>
-          <div class="metric-box">
-            <span class="metric-label">7-Day EMA Trend</span>
-            <span id="metric-ema-weight" class="metric-value accent-terracotta">--</span>
-            <span class="metric-sub">Smoothed true weight</span>
+          <div class="metric-card">
+            <span class="metric-label">
+              <span>7-Day EMA Trend</span>
+              <button type="button" class="info-trigger-btn" data-info="ema-signal" aria-label="Explain 7-day EMA">i</button>
+            </span>
+            <span class="metric-val num" id="metricEmaWeight">--</span>
+            <span class="metric-delta sage-text num" id="metricEmaDelta">True tissue signal</span>
           </div>
-          <div class="metric-box">
-            <span class="metric-label">Weekly Velocity</span>
-            <span id="metric-weekly-rate" class="metric-value">--</span>
-            <span id="metric-weekly-sub" class="metric-sub">Rolling 7d delta</span>
+          <div class="metric-card">
+            <span class="metric-label">
+              <span>Weekly Velocity</span>
+              <button type="button" class="info-trigger-btn" data-info="weekly-velocity" aria-label="Explain weekly velocity">i</button>
+            </span>
+            <span class="metric-val num" id="metricWeeklyRate">--</span>
+            <span class="metric-delta num" id="metricWeeklyZone">Need 3+ days</span>
           </div>
-          <div class="metric-box">
-            <span class="metric-label">Goal Trajectory</span>
-            <span id="metric-goal-eta" class="metric-value accent-sage">--</span>
-            <span id="metric-goal-target" class="metric-sub">Target: --</span>
+          <div class="metric-card">
+            <span class="metric-label">
+              <span>Goal Trajectory</span>
+              <button type="button" class="info-trigger-btn" data-info="goal-trajectory" aria-label="Explain goal trajectory">i</button>
+            </span>
+            <span class="metric-val num" id="metricGoalWeight">--</span>
+            <span class="metric-delta amber-text num" id="metricGoalTrajectory">Set goal in settings</span>
           </div>
         </div>
 
-        <!-- Detailed Historical Log List -->
-        <article class="card">
+        <!-- Detailed Historical Weight Log List -->
+        <article class="zen-card">
           <div class="card-header">
-            <h2 class="card-title">Scale History</h2>
-            <span id="weight-history-count" class="pill-badge neutral">0 logs</span>
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="8" y1="6" x2="21" y2="6"/>
+                <line x1="8" y1="12" x2="21" y2="12"/>
+                <line x1="8" y1="18" x2="21" y2="18"/>
+                <line x1="3" y1="6" x2="3.01" y2="6"/>
+                <line x1="3" y1="12" x2="3.01" y2="12"/>
+                <line x1="3" y1="18" x2="3.01" y2="18"/>
+              </svg>
+              Historical Weight Ledger
+            </h2>
+            <span class="card-meta" id="weightHistorySub">Inline edit &amp; delete</span>
           </div>
-          <div id="weight-history-list" class="timeline-list">
+          <div class="timeline-list" id="weightHistoryList">
             <!-- Dynamically populated by app.js -->
           </div>
         </article>
       </section>
 
-      <!-- ==========================================
-           TAB 4: HABITS, RECOVERY & VAULT
-           ========================================== -->
-      <section id="view-vault" class="tab-view" aria-label="Habits, Recovery and Vault">
-        <!-- Long-Term Consistency & Streak Shields -->
-        <article class="card">
+      <!-- ====================================================================
+           TAB 4: HABITS STUDIO, RECOVERY & DUAL-MODE DATA VAULT
+           ==================================================================== -->
+      <section id="view-vault" class="tab-view" aria-label="Habits Studio, Recovery, and Data Vault">
+        <!-- Visual Habit Studio & 28-Day Heatmap -->
+        <article class="zen-card">
           <div class="card-header">
-            <div>
-              <h2 class="card-title">Adherence &amp; Resilience</h2>
-              <p class="card-subtitle">Long-term signal over fragile streaks</p>
-            </div>
-            <button type="button" id="btn-use-shield" class="shield-pill-btn" title="Activate Monthly Streak Shield for Today">
-              <svg class="icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
               </svg>
-              <span id="shield-count-text">2/2 Shields</span>
-            </button>
+              <span>Habit Studio &amp; Adherence</span>
+              <button type="button" class="info-trigger-btn" data-info="habit-adherence" aria-label="How habit adherence is computed">i</button>
+            </h2>
+            <span class="card-meta">Tap any day orb to log</span>
           </div>
 
-          <div class="metrics-grid-2x2 compact">
-            <div class="metric-box">
-              <span class="metric-label">30-Day Consistency</span>
-              <span id="habit-score-30d" class="metric-value accent-sage">100%</span>
-              <span class="metric-sub">Rolling monthly adherence</span>
+          <div id="comebackActiveBanner" class="comeback-banner-active" style="display: none;">
+            Day 1 starts today. Past logs are safely archived—focus only on today's rep.
+          </div>
+
+          <!-- 30-Day and 90-Day Consistency Scorecards -->
+          <div class="consistency-hero-grid">
+            <div class="score-pillar">
+              <span class="metric-label">
+                <span>30-Day Adherence</span>
+                <button type="button" class="info-trigger-btn" data-info="habit-adherence" aria-label="30-day adherence math">i</button>
+              </span>
+              <span class="score-pillar-val num" id="score30DayVal">100%</span>
+              <span class="metric-delta num" id="score30DaySub">Target sessions met</span>
             </div>
-            <div class="metric-box">
-              <span class="metric-label">90-Day Consistency</span>
-              <span id="habit-score-90d" class="metric-value accent-amber">100%</span>
-              <span class="metric-sub">Quarterly baseline</span>
+            <div class="score-pillar">
+              <span class="metric-label">
+                <span>90-Day Adherence</span>
+                <button type="button" class="info-trigger-btn" data-info="habit-adherence" aria-label="90-day adherence math">i</button>
+              </span>
+              <span class="score-pillar-val num" id="score90DayVal">100%</span>
+              <span class="metric-delta num" id="score90DaySub">Long-term momentum</span>
             </div>
           </div>
 
-          <div class="recovery-banner">
-            <div>
-              <p class="recovery-title">Intentional Recovery &amp; Streak Shields</p>
-              <p class="recovery-desc">Weekly targets automatically treat non-training days as planned recovery. Illness or travel? Apply one of your 2 monthly shields to protect momentum.</p>
+          <!-- 28-Day Visual Consistency Heatmap -->
+          <div class="heatmap-wrap">
+            <div class="heatmap-header">
+              <span>Last 28 Days Activity Pulse</span>
+              <span>Subtle tint = more habits completed</span>
+            </div>
+            <div class="heatmap-grid" id="habitHeatmapGrid">
+              <!-- Populated by app.js -->
             </div>
           </div>
-        </article>
 
-        <!-- Weekly Habit Engine Breakdown -->
-        <article class="card">
-          <div class="card-header">
-            <h2 class="card-title">Weekly Habit Targets</h2>
-            <button type="button" id="btn-add-habit" class="pill-action-btn">+ New Habit</button>
+          <!-- 2 Monthly Streak Shields -->
+          <div class="shield-banner">
+            <div class="shield-info">
+              <div class="shield-title">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span id="shieldCountBadge">2 / 2 Monthly Streak Shields</span>
+                <button type="button" class="info-trigger-btn" data-info="streak-shields" aria-label="How Streak Shields work">i</button>
+              </div>
+              <div class="shield-sub" id="shieldStatusSub">Protects adherence during travel, illness, or life events</div>
+            </div>
+            <button type="button" class="shield-btn spring-btn" id="applyShieldBtn">Use Shield</button>
           </div>
-          <div id="vault-habits-detailed-list" class="habits-detailed-stack">
+
+          <!-- Interactive Weekly Habit Cards -->
+          <div class="habit-cards-stack" id="vaultHabitList" style="margin-bottom: 16px;">
             <!-- Dynamically populated by app.js -->
           </div>
+
+          <!-- Fluid New Habit Builder -->
+          <form id="addHabitForm" class="habit-builder-box" novalidate>
+            <div class="field-group">
+              <label class="field-label" for="newHabitNameInput">Create New Weekly Habit</label>
+              <input type="text" id="newHabitNameInput" class="zen-input" placeholder="e.g., Sauna, Zone 2 Cardio, 8h Sleep" maxlength="48">
+            </div>
+            <div class="input-row-2col" style="margin-bottom: 0;">
+              <div class="field-group">
+                <label class="field-label" for="newHabitTargetSelect">Weekly Target</label>
+                <select id="newHabitTargetSelect" class="zen-input num">
+                  <option value="3">3 days / week</option>
+                  <option value="4" selected>4 days / week</option>
+                  <option value="5">5 days / week</option>
+                  <option value="6">6 days / week</option>
+                  <option value="7">7 days / week</option>
+                  <option value="2">2 days / week</option>
+                  <option value="1">1 day / week</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="newHabitThemeSelect">Color &amp; Icon</label>
+                <select id="newHabitThemeSelect" class="zen-input">
+                  <option value="terracotta">🏋️ Ember Coral</option>
+                  <option value="sage" selected>🚶 Botanical Sage</option>
+                  <option value="teal">💧 Ocean Teal</option>
+                  <option value="amber">🧘 Sunlit Amber</option>
+                  <option value="violet">⚡ Midnight Violet</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="primary-btn sage-btn spring-btn" id="addHabitBtn">
+              + Add Habit to Weekly Rhythm
+            </button>
+          </form>
         </article>
 
-        <!-- Comeback Protocol (Clean Slate) -->
-        <article class="card comeback-card">
+        <!-- Comeback Protocol Card (Clean Slate Button) -->
+        <article class="zen-card comeback-card">
           <div class="card-header">
-            <div>
-              <h2 class="card-title">Comeback Protocol</h2>
-              <p class="card-subtitle">Returning from injury, travel, or life?</p>
-            </div>
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+              <span>Comeback Protocol</span>
+              <button type="button" class="info-trigger-btn" data-info="streak-shields" aria-label="How Comeback Protocol works">i</button>
+            </h2>
+            <span class="card-meta">Zero guilt reset</span>
           </div>
-          <p class="comeback-copy">No guilt, no red overdue badges. Archive past habit misses and reset your active baseline with a calm clean slate.</p>
-          <button type="button" id="btn-comeback-protocol" class="secondary-full-btn">
+          <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 14px;">
+            Returning from travel, illness, or a busy season? Archive past habit streaks safely, clear missed-day friction, and reset your active consistency window to Day 1 today.
+          </p>
+          <button type="button" class="secondary-btn spring-btn" id="triggerComebackBtn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/>
+            </svg>
             Activate Clean Slate ("Day 1 Starts Today")
           </button>
         </article>
 
-        <!-- Data Vault & Eviction Guard -->
-        <article class="card vault-card">
+        <!-- ================================================================
+             DUAL-MODE BACKUP & RESTORE CARD:
+             1. Simple Mode (Compact, Easy-to-Understand 2-Button View)
+             2. Nerdy Mode (Explain-Everything Technical Architecture & Power Tools)
+             ================================================================ -->
+        <article class="zen-card" id="vaultCard">
           <div class="card-header">
-            <div>
-              <h2 class="card-title">Offline Data Vault</h2>
-              <p id="vault-storage-status" class="card-subtitle">IndexedDB Persistent Storage</p>
+            <h2 class="card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              Backup &amp; Restore
+            </h2>
+            <!-- Tiny Simple vs Nerdy Mode Switcher -->
+            <div class="vault-mode-switch" role="tablist" aria-label="Backup View Complexity">
+              <button type="button" class="vault-mode-btn active" id="vaultModeSimpleBtn" role="tab" aria-selected="true">Simple</button>
+              <button type="button" class="vault-mode-btn" id="vaultModeNerdyBtn" role="tab" aria-selected="false">Nerdy</button>
             </div>
-            <span id="vault-backup-badge" class="pill-badge amber">Never Backed Up</span>
           </div>
 
-          <p class="vault-copy">iOS Safari keeps your data locally on-device. Save a periodic JSON snapshot to iOS Files or iCloud Drive for lifetime peace of mind.</p>
-
-          <div class="vault-actions-stack">
-            <button type="button" id="btn-export-vault" class="primary-full-btn terracotta">
-              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-              <span>Save Backup to Files (.json)</span>
-            </button>
-
-            <label for="input-restore-vault" class="secondary-full-btn file-label-btn">
-              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="17 8 12 3 7 8"></polyline>
-                <line x1="12" y1="3" x2="12" y2="15"></line>
-              </svg>
-              <span>Restore Vault from Backup</span>
-              <input type="file" id="input-restore-vault" accept=".json,application/json" class="sr-only">
-            </label>
-
-            <button type="button" id="btn-seed-demo" class="ghost-full-btn">
-              Load 60-Day Veteran Sample Dataset
-            </button>
+          <div class="vault-warning-badge" id="vaultBackupWarningBadge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span id="vaultBackupWarningText">No backup saved within the last 30 days. Save a quick backup file to keep your history safe.</span>
           </div>
+
+          <!-- Shared Hidden File Input for Restore -->
+          <input type="file" id="restoreFileInput" class="sr-only" accept=".json,application/json">
+
+          <!-- ==============================================================
+               MODE 1: SIMPLE MODE (COMPACT & EASY TO UNDERSTAND — DEFAULT)
+               ============================================================== -->
+          <div id="vaultSimpleView">
+            <div class="vault-simple-status-row">
+              <span>
+                <span class="vault-simple-status-dot"></span>
+                <strong id="vaultSimpleStatusLabel">Saved on this iPhone</strong>
+              </span>
+              <span class="mono-tag" id="vaultSimpleLastBackupText" style="font-size:0.7rem;color:var(--text-secondary);">Last backup: Never</span>
+            </div>
+
+            <p class="vault-simple-desc">
+              Your logs stay 100% private on your phone. Save a backup file occasionally—if you ever get a new phone, tap <strong>Restore Backup</strong> to bring everything back without losing a single log.
+            </p>
+
+            <div class="input-row-2col" style="margin-bottom: 0;">
+              <button type="button" class="primary-btn spring-btn" id="simpleSaveBackupBtn" style="padding: 12px 14px; font-size: 0.86rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Save Backup
+              </button>
+              <button type="button" class="secondary-btn spring-btn" id="simpleRestoreBackupBtn" style="padding: 12px 14px; font-size: 0.86rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="17 8 12 3 7 8"/>
+                  <line x1="12" y1="3" x2="12" y2="15"/>
+                </svg>
+                Restore Backup
+              </button>
+            </div>
+          </div>
+
+          <!-- ==============================================================
+               MODE 2: NERDY MODE (EXPLAIN EVERYTHING + TECHNICAL POWER TOOLS)
+               ============================================================== -->
+          <div id="vaultNerdyView" style="display: none;">
+            <!-- Deep Technical Explainer Stack -->
+            <div class="nerdy-explainer-stack">
+              <div class="nerdy-explainer-card">
+                <div class="nerdy-explainer-title">
+                  <span>1. Dual-Layer Storage Engine &amp; ITP Eviction Guard</span>
+                  <span>IndexedDB v2 + Mirror</span>
+                </div>
+                Every log writes transactionally to native <code>IndexedDB</code> (<code>ZenithOfflineVaultDB</code> across 4 object stores: <code>weight_logs</code>, <code>food_logs</code>, <code>habits</code>, <code>user_settings</code>) AND mirrors synchronously to <code>localStorage</code>. On boot, Zenith calls <code>navigator.storage.persist()</code> so iOS WebKit exempts your vault from 7-day Intelligent Tracking Prevention (ITP) cache eviction.
+              </div>
+
+              <div class="nerdy-explainer-card">
+                <div class="nerdy-explainer-title">
+                  <span>2. Cross-Version Reconciliation (Smart Merge vs Replace)</span>
+                  <span>Zero-Loss Merge</span>
+                </div>
+                <strong>Smart Merge (Safe)</strong> reconciles backups from any app version without wiping newer logs:
+                <code class="nerdy-code-pill">• weight_logs: keyed by YYYY-MM-DD (latest timestamp wins)
+• food_logs: unioned by UUID + sub-ingredient arrays preserved
+• habits: completedDates &amp; restDates set-unioned &amp; sorted
+• rollback: pre-restore snapshot saved to zenith_pre_restore_rollback_v2</code>
+              </div>
+
+              <div class="nerdy-explainer-card">
+                <div class="nerdy-explainer-title">
+                  <span>3. Cryptographic Integrity &amp; Input Sanitization</span>
+                  <span id="nerdyChecksumBadge">fnv1a-00000000</span>
+                </div>
+                Incoming JSON payloads pass through a custom <code>JSON.parse</code> reviver that strips prototype-pollution vectors (<code>__proto__</code>, <code>constructor</code>, <code>prototype</code>), enforces a 15 MB DoS ceiling, clamps numeric bounds, and computes a 32-bit FNV-1a integrity hash.
+              </div>
+            </div>
+
+            <!-- Power-User Export & Restore Actions -->
+            <div class="vault-actions-grid">
+              <button type="button" class="primary-btn spring-btn" id="exportVaultBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                Export Raw .json Snapshot
+              </button>
+
+              <div class="input-row-2col" style="margin-bottom: 0;">
+                <button type="button" class="secondary-btn spring-btn" id="shareVaultNativeBtn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                    <polyline points="16 6 12 2 8 6"/>
+                    <line x1="12" y1="2" x2="12" y2="15"/>
+                  </svg>
+                  iOS Share Sheet
+                </button>
+                <button type="button" class="secondary-btn spring-btn" id="copyVaultClipboardBtn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                  </svg>
+                  Copy Raw JSON
+                </button>
+              </div>
+
+              <div style="margin-top: 4px;">
+                <div class="field-label" style="margin-bottom: 6px;">Reconciliation Strategy</div>
+                <div class="segmented-control" style="margin-bottom: 10px;">
+                  <button type="button" class="seg-btn active" id="restoreModeMergeBtn">Smart Merge (Non-Destructive)</button>
+                  <button type="button" class="seg-btn" id="restoreModeReplaceBtn">Full Replace (Overwrite)</button>
+                </div>
+                <div class="input-row-2col" style="margin-bottom: 0;">
+                  <button type="button" class="secondary-btn spring-btn" id="openRestoreTriggerBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    Upload .json File
+                  </button>
+                  <button type="button" class="secondary-btn spring-btn" id="openPasteRestoreBtn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                      <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+                    </svg>
+                    Paste JSON String
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Technical Telemetry Table -->
+            <div class="vault-meta-list">
+              <div class="vault-meta-row">
+                <span>WebKit Persistent Storage</span>
+                <strong class="mono-tag" id="vaultPersistStatus">Checking...</strong>
+              </div>
+              <div class="vault-meta-row">
+                <span>Active Storage Engine</span>
+                <strong class="mono-tag" id="vaultEngineStatus">IndexedDB + Mirror</strong>
+              </div>
+              <div class="vault-meta-row">
+                <span>Schema &amp; App Version</span>
+                <strong class="mono-tag" id="vaultSchemaBadge">Schema v2 • App v2.5.0</strong>
+              </div>
+              <div class="vault-meta-row">
+                <span>FNV-1a Integrity Hash</span>
+                <strong class="mono-tag" id="vaultHashText" style="color:var(--accent-sage);">fnv1a-00000000</strong>
+              </div>
+              <div class="vault-meta-row">
+                <span>Serialized Payload Size</span>
+                <strong class="mono-tag" id="vaultPayloadBytesText">0 KB</strong>
+              </div>
+              <div class="vault-meta-row">
+                <span>Object Store Record Counts</span>
+                <strong class="mono-tag" id="vaultTotalRecordsText">0 items</strong>
+              </div>
+              <div class="vault-meta-row">
+                <span>Last Backup Exported</span>
+                <strong class="mono-tag" id="vaultLastBackupText">Never</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shared Undo Last Restore Button (Appears in both Simple & Nerdy modes whenever a rollback snapshot exists) -->
+          <button type="button" class="secondary-btn spring-btn" id="undoRestoreBtn" style="display: none; margin-top: 10px; border-color: var(--accent-amber-border); color: var(--accent-amber);">
+            Undo Last Restore (Revert to Pre-Restore Snapshot)
+          </button>
         </article>
       </section>
-
     </main>
+  </div>
 
-    <!-- ==========================================
-         4-TAB BOTTOM NAVIGATION BAR
-         ========================================== -->
-    <nav class="bottom-nav" aria-label="Primary Navigation">
-      <button type="button" class="nav-tab active" data-target="view-today">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <polyline points="12 6 12 12 16 14"></polyline>
+  <!-- ======================================================================
+       FLOATING 4-TAB IOS GLASS PILL DOCK
+       ====================================================================== -->
+  <nav class="bottom-nav" aria-label="Primary Navigation">
+    <div class="bottom-nav-inner">
+      <button type="button" class="nav-tab active" data-tab="today" id="navTabToday">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="9" rx="2"/>
+          <rect x="14" y="3" width="7" height="5" rx="2"/>
+          <rect x="14" y="12" width="7" height="9" rx="2"/>
+          <rect x="3" y="16" width="7" height="5" rx="2"/>
         </svg>
-        <span class="nav-label">Today</span>
+        <span>Today</span>
       </button>
 
-      <button type="button" class="nav-tab" data-target="view-fuel">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
-          <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
-          <line x1="6" y1="1" x2="6" y2="4"></line>
-          <line x1="10" y1="1" x2="10" y2="4"></line>
-          <line x1="14" y1="1" x2="14" y2="4"></line>
+      <button type="button" class="nav-tab" data-tab="fuel" id="navTabFuel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+          <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+          <line x1="6" y1="1" x2="6" y2="4"/>
+          <line x1="10" y1="1" x2="10" y2="4"/>
+          <line x1="14" y1="1" x2="14" y2="4"/>
         </svg>
-        <span class="nav-label">Fuel</span>
+        <span>Food</span>
       </button>
 
-      <button type="button" class="nav-tab" data-target="view-weight">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+      <button type="button" class="nav-tab" data-tab="weight" id="navTabWeight">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/>
+          <path d="m19 9-5 5-4-4-3 3"/>
         </svg>
-        <span class="nav-label">Weight</span>
+        <span>Weight</span>
       </button>
 
-      <button type="button" class="nav-tab" data-target="view-vault">
-        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+      <button type="button" class="nav-tab" data-tab="vault" id="navTabVault">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
         </svg>
-        <span class="nav-label">Vault</span>
+        <span>Habits</span>
       </button>
-    </nav>
+    </div>
+  </nav>
 
-    <!-- ==========================================
-         BOTTOM SHEET 1: FAST FUEL LOGGER
-         ========================================== -->
-    <div id="sheet-backdrop" class="sheet-backdrop hidden"></div>
-
-    <section id="sheet-fuel" class="bottom-sheet" aria-hidden="true" aria-labelledby="sheet-fuel-title">
+  <!-- ======================================================================
+       BOTTOM SHEET 1: FAST WEIGHT LOGGER (<3 SECONDS PRE-FILLED)
+       ====================================================================== -->
+  <div class="sheet-backdrop" id="weightSheetBackdrop" aria-hidden="true">
+    <div class="sheet-panel" role="dialog" aria-labelledby="weightSheetTitle">
       <div class="sheet-handle"></div>
       <div class="sheet-header">
-        <h3 id="sheet-fuel-title" class="sheet-title">Log Fuel</h3>
-        <button type="button" class="sheet-close-btn" data-close-sheet="sheet-fuel" aria-label="Close">&times;</button>
+        <h3 class="sheet-title" id="weightSheetTitle">Fast Scale Log</h3>
+        <button type="button" class="icon-btn spring-btn" id="closeWeightSheetBtn" aria-label="Close weight sheet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
       </div>
-
-      <form id="form-fuel" class="sheet-form" novalidate>
-        <input type="hidden" id="fuel-edit-id" value="">
-
-        <div class="input-row-2col">
-          <div class="field-group">
-            <label for="input-fuel-kcal">Calories (kcal)</label>
-            <input type="number" id="input-fuel-kcal" inputmode="numeric" pattern="[0-9]*" placeholder="0" required>
-          </div>
-          <div class="field-group">
-            <label for="input-fuel-protein">Protein (g)</label>
-            <input type="number" id="input-fuel-protein" inputmode="numeric" pattern="[0-9]*" placeholder="0" required>
-          </div>
+      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 12px;">
+        Pre-filled with your last logged weight. Tap steppers to adjust and save in one tap.
+      </p>
+      <div class="weight-input-stack">
+        <input type="number" id="sheetWeightInput" class="zen-input weight-hero-input num" inputmode="decimal" step="0.1" min="25" max="600">
+        <div class="weight-stepper-grid">
+          <button type="button" class="stepper-btn" id="sheetWeightDownBig">-0.5</button>
+          <button type="button" class="stepper-btn" id="sheetWeightDownSmall">-0.1</button>
+          <button type="button" class="stepper-btn" id="sheetWeightUpSmall">+0.1</button>
+          <button type="button" class="stepper-btn" id="sheetWeightUpBig">+0.5</button>
         </div>
+      </div>
+      <div class="field-group" style="margin-bottom: 14px;">
+        <label class="field-label" for="sheetWeightNote">Quick Note (optional)</label>
+        <input type="text" id="sheetWeightNote" class="zen-input" placeholder="Morning fasted, post-training..." maxlength="80">
+      </div>
+      <button type="button" class="primary-btn sage-btn spring-btn" id="sheetWeightSaveBtn">Save Today's Weight</button>
+    </div>
+  </div>
 
-        <!-- 1-Tap Instant Increment Pills -->
-        <div class="quick-pills-section">
-          <span class="quick-pills-label">1-Tap Add</span>
-          <div class="quick-pills-row">
-            <button type="button" class="increment-pill terracotta" data-add-kcal="250">+250 kcal</button>
-            <button type="button" class="increment-pill terracotta" data-add-kcal="500">+500 kcal</button>
-            <button type="button" class="increment-pill sage" data-add-protein="25">+25g Pro</button>
-            <button type="button" class="increment-pill sage" data-add-protein="50">+50g Pro</button>
-            <button type="button" class="increment-pill neutral" id="btn-fuel-reset-inputs">Clear</button>
-          </div>
-        </div>
-
-        <div class="field-group">
-          <label for="input-fuel-note">Quick Note (Optional)</label>
-          <input type="text" id="input-fuel-note" placeholder="e.g., Post-lift whey &amp; oats, Ribeye &amp; rice" maxlength="60">
-        </div>
-
-        <button type="submit" class="primary-full-btn terracotta">Save Fuel Entry</button>
-      </form>
-    </section>
-
-    <!-- ==========================================
-         BOTTOM SHEET 2: SMART WEIGHT LOGGER
-         ========================================== -->
-    <section id="sheet-weight" class="bottom-sheet" aria-hidden="true" aria-labelledby="sheet-weight-title">
+  <!-- ======================================================================
+       BOTTOM SHEET 2: FAST FOOD & MULTI-INGREDIENT MEAL LOGGER + MEMORY
+       ====================================================================== -->
+  <div class="sheet-backdrop" id="fuelSheetBackdrop" aria-hidden="true">
+    <div class="sheet-panel" role="dialog" aria-labelledby="fuelSheetTitle">
       <div class="sheet-handle"></div>
       <div class="sheet-header">
-        <h3 id="sheet-weight-title" class="sheet-title">Log Scale Weight</h3>
-        <button type="button" class="sheet-close-btn" data-close-sheet="sheet-weight" aria-label="Close">&times;</button>
+        <h3 class="sheet-title" id="fuelSheetTitle">Log Food or Build Meal</h3>
+        <button type="button" class="icon-btn spring-btn" id="closeFuelSheetBtn" aria-label="Close food sheet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
       </div>
 
-      <form id="form-weight" class="sheet-form" novalidate>
-        <input type="hidden" id="weight-edit-id" value="">
+      <!-- Mode Switcher Inside Sheet -->
+      <div class="segmented-control" style="margin-bottom: 12px;">
+        <button type="button" class="seg-btn active" id="sheetMealModeSimpleBtn">Simple Entry</button>
+        <button type="button" class="seg-btn" id="sheetMealModeBuilderBtn">Build Meal (Multi-Item)</button>
+      </div>
 
-        <div class="field-group">
-          <label for="input-weight-val" id="label-weight-unit">Scale Weight (kg)</label>
-          <input type="number" id="input-weight-val" step="0.1" inputmode="decimal" placeholder="80.0" required class="hero-number-input">
-        </div>
-
-        <!-- Fine Stepper Pills for Under-3-Second Adjustment -->
-        <div class="quick-pills-section">
-          <span class="quick-pills-label">Fine Nudge</span>
-          <div class="quick-pills-row">
-            <button type="button" class="increment-pill neutral" data-nudge-weight="-0.5">-0.5</button>
-            <button type="button" class="increment-pill neutral" data-nudge-weight="-0.1">-0.1</button>
-            <button type="button" class="increment-pill sage" data-nudge-weight="0.1">+0.1</button>
-            <button type="button" class="increment-pill sage" data-nudge-weight="0.5">+0.5</button>
+      <!-- Sheet Mode A: Simple Entry -->
+      <div id="sheetSimpleModeBox">
+        <div class="field-group food-memory-wrap">
+          <div class="quick-pills-label" style="margin-bottom: 4px;">
+            <label class="field-label" for="sheetFuelNoteInput">Search Food Memory or Type Name</label>
+            <button type="button" class="text-link-btn spring-btn" id="sheetFuelResetBtn">Clear</button>
           </div>
+          <input type="text" id="sheetFuelNoteInput" class="zen-input" placeholder="Search remembered foods (e.g., Whey, Eggs, Steak)..." maxlength="120" autocomplete="off">
+          <div class="memory-suggestions-tray" id="sheetMemoryTray"></div>
         </div>
 
+        <div class="quick-pills-row">
+          <button type="button" class="pill-btn cal-pill" id="sheetPill250Cal">+250 kcal</button>
+          <button type="button" class="pill-btn cal-pill" id="sheetPill500Cal">+500 kcal</button>
+          <button type="button" class="pill-btn pro-pill" id="sheetPill25Pro">+25g protein</button>
+          <button type="button" class="pill-btn pro-pill" id="sheetPill50Pro">+50g protein</button>
+        </div>
         <div class="input-row-2col">
           <div class="field-group">
-            <label for="input-weight-date">Date</label>
-            <input type="date" id="input-weight-date" required>
+            <label class="field-label" for="sheetFuelCalInput">Calories (kcal — optional)</label>
+            <input type="number" id="sheetFuelCalInput" class="zen-input num" inputmode="numeric" placeholder="0" min="0" max="15000">
           </div>
           <div class="field-group">
-            <label for="input-weight-note">Context Note</label>
-            <input type="text" id="input-weight-note" placeholder="Morning fasted, high sodium..." maxlength="45">
+            <label class="field-label" for="sheetFuelProInput">Protein (g — optional)</label>
+            <input type="number" id="sheetFuelProInput" class="zen-input num" inputmode="numeric" placeholder="0" min="0" max="1000">
           </div>
         </div>
+        <button type="button" class="primary-btn spring-btn" id="sheetFuelSaveBtn">Add Food Now</button>
+      </div>
 
-        <button type="submit" class="primary-full-btn sage">Save Weight Check-In</button>
-      </form>
-    </section>
+      <!-- Sheet Mode B: Multi-Ingredient Meal Builder -->
+      <div id="sheetBuilderModeBox" style="display: none;">
+        <div class="field-group" style="margin-bottom: 10px;">
+          <label class="field-label" for="sheetBuilderMealTitleInput">Meal Name</label>
+          <input type="text" id="sheetBuilderMealTitleInput" class="zen-input" placeholder="e.g., Lunch, Post-Lift Dinner" maxlength="80">
+        </div>
+        <div class="meal-builder-section">
+          <div class="field-group">
+            <label class="field-label" for="sheetBuilderIngNameInput">Search or Type Ingredient</label>
+            <input type="text" id="sheetBuilderIngNameInput" class="zen-input" placeholder="Type ingredient (e.g., Chicken, Rice)..." maxlength="80" autocomplete="off">
+            <div class="memory-suggestions-tray" id="sheetBuilderMemoryTray"></div>
+          </div>
+          <div class="input-row-2col" style="margin-bottom: 4px;">
+            <div class="field-group">
+              <label class="field-label" for="sheetBuilderIngCalInput">Calories (kcal)</label>
+              <input type="number" id="sheetBuilderIngCalInput" class="zen-input num" inputmode="numeric" placeholder="0" min="0" max="10000">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="sheetBuilderIngProInput">Protein (g)</label>
+              <input type="number" id="sheetBuilderIngProInput" class="zen-input num" inputmode="numeric" placeholder="0" min="0" max="500">
+            </div>
+          </div>
+          <button type="button" class="secondary-btn spring-btn" id="sheetAddIngredientBtn">+ Add Ingredient to Meal</button>
+          <div class="ingredient-draft-list" id="sheetBuilderIngredientList"></div>
+          <div class="meal-builder-sum-bar">
+            <span id="sheetBuilderSumCountText">0 ingredients</span>
+            <span class="num" id="sheetBuilderSumMacrosText">Total: 0 kcal • 0g P</span>
+          </div>
+        </div>
+        <button type="button" class="primary-btn sage-btn spring-btn" id="sheetSaveBuiltMealBtn">Save Combined Meal</button>
+      </div>
+    </div>
+  </div>
 
-    <!-- ==========================================
-         BOTTOM SHEET 3: TARGETS & HABIT SETTINGS
-         ========================================== -->
-    <section id="sheet-settings" class="bottom-sheet" aria-hidden="true" aria-labelledby="sheet-settings-title">
+  <!-- ======================================================================
+       BOTTOM SHEET 3: TARGETS, SETTINGS & PASTE RESTORE
+       ====================================================================== -->
+  <div class="sheet-backdrop" id="settingsSheetBackdrop" aria-hidden="true">
+    <div class="sheet-panel" role="dialog" aria-labelledby="settingsSheetTitle">
       <div class="sheet-handle"></div>
       <div class="sheet-header">
-        <h3 id="sheet-settings-title" class="sheet-title">Targets &amp; Preferences</h3>
-        <button type="button" class="sheet-close-btn" data-close-sheet="sheet-settings" aria-label="Close">&times;</button>
+        <h3 class="sheet-title" id="settingsSheetTitle">Targets &amp; Appearance</h3>
+        <button type="button" class="icon-btn spring-btn" id="closeSettingsSheetBtn" aria-label="Close settings sheet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
       </div>
 
-      <form id="form-settings" class="sheet-form" novalidate>
+      <form id="settingsForm" novalidate>
         <div class="input-row-2col">
           <div class="field-group">
-            <label for="input-set-kcal">Daily Calorie Target</label>
-            <input type="number" id="input-set-kcal" inputmode="numeric" required>
+            <label class="field-label" for="settingCalTarget">Daily Calories (kcal)</label>
+            <input type="number" id="settingCalTarget" class="zen-input num" inputmode="numeric" min="800" max="12000" step="50">
           </div>
           <div class="field-group">
-            <label for="input-set-protein">Daily Protein Target (g)</label>
-            <input type="number" id="input-set-protein" inputmode="numeric" required>
+            <label class="field-label" for="settingProTarget">Daily Protein (g)</label>
+            <input type="number" id="settingProTarget" class="zen-input num" inputmode="numeric" min="30" max="600" step="5">
           </div>
         </div>
 
         <div class="input-row-2col">
           <div class="field-group">
-            <label for="input-set-goal-weight" id="label-set-goal-weight">Goal Weight (kg)</label>
-            <input type="number" id="input-set-goal-weight" step="0.1" inputmode="decimal" required>
+            <label class="field-label" for="settingGoalWeight" id="settingGoalWeightLabel">Goal Weight (kg)</label>
+            <input type="number" id="settingGoalWeight" class="zen-input num" inputmode="decimal" step="0.1" min="30" max="500">
           </div>
           <div class="field-group">
-            <label for="select-set-unit">Preferred Unit</label>
-            <select id="select-set-unit">
-              <option value="kg">Kilograms (kg)</option>
-              <option value="lbs">Pounds (lbs)</option>
+            <label class="field-label" for="settingThemeSelect">Appearance</label>
+            <select id="settingThemeSelect" class="zen-input">
+              <option value="dark">Obsidian Topographic (Black)</option>
+              <option value="light">Sunlit Linen (Light)</option>
+              <option value="auto">System Auto</option>
             </select>
           </div>
         </div>
 
-        <button type="submit" class="primary-full-btn terracotta">Save Preferences</button>
+        <button type="submit" class="primary-btn spring-btn" id="saveSettingsBtn" style="margin-top: 6px; margin-bottom: 14px;">Save Targets</button>
       </form>
-    </section>
 
-    <!-- ==========================================
-         BOTTOM SHEET 4: ADD CUSTOM HABIT
-         ========================================== -->
-    <section id="sheet-habit" class="bottom-sheet" aria-hidden="true" aria-labelledby="sheet-habit-title">
-      <div class="sheet-handle"></div>
-      <div class="sheet-header">
-        <h3 id="sheet-habit-title" class="sheet-title">New Weekly Practice</h3>
-        <button type="button" class="sheet-close-btn" data-close-sheet="sheet-habit" aria-label="Close">&times;</button>
+      <div id="pasteRestoreContainer" style="display: none; margin-bottom: 14px; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+        <label class="field-label" for="pasteBackupTextarea">Paste Portable Backup JSON</label>
+        <textarea id="pasteBackupTextarea" class="zen-input" rows="4" placeholder='{"schemaVersion":2,"weight_logs":[...]}' style="font-size: 0.8rem; font-family: monospace; margin: 6px 0 10px;"></textarea>
+        <button type="button" class="primary-btn sage-btn spring-btn" id="confirmPasteRestoreBtn">Validate &amp; Restore Pasted JSON</button>
       </div>
 
-      <form id="form-habit" class="sheet-form" novalidate>
-        <div class="field-group">
-          <label for="input-habit-name">Practice Name</label>
-          <input type="text" id="input-habit-name" placeholder="e.g., Heavy Resistance Training, Zone 2 Walk" required maxlength="36">
-        </div>
-
-        <div class="field-group">
-          <label for="input-habit-target">Weekly Target Frequency (1 to 7 days/week)</label>
-          <input type="number" id="input-habit-target" min="1" max="7" value="4" inputmode="numeric" required>
-        </div>
-
-        <button type="submit" class="primary-full-btn sage">Add Practice</button>
-      </form>
-    </section>
-
-    <!-- Instant Feedback Toast Pill -->
-    <div id="feedback-toast" class="feedback-toast" role="status" aria-live="polite">
-      <span class="toast-dot"></span>
-      <span id="feedback-toast-text">Saved to Vault</span>
+      <div style="padding-top: 12px; border-top: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 8px;">
+        <button type="button" class="secondary-btn spring-btn" id="resetDashboardOrderSettingsBtn">Reset Today Dashboard Card Sizes &amp; Order</button>
+        <button type="button" class="secondary-btn spring-btn" id="seedDemoDataBtn">Reset Sample 24-Day Lifter History</button>
+      </div>
     </div>
   </div>
 
-  <script src="./app.js"></script>
+  <!-- ======================================================================
+       BOTTOM SHEET 4: CALM IN-PAGE CONFIRMATION MODAL
+       ====================================================================== -->
+  <div class="sheet-backdrop" id="confirmSheetBackdrop" aria-hidden="true">
+    <div class="sheet-panel" role="alertdialog" aria-labelledby="confirmSheetTitle">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 class="sheet-title" id="confirmSheetTitle">Confirm Action</h3>
+        <button type="button" class="icon-btn spring-btn" id="closeConfirmSheetBtn" aria-label="Cancel confirmation">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <p id="confirmSheetBody" style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 18px;"></p>
+      <div class="input-row-2col" style="margin-bottom: 0;">
+        <button type="button" class="secondary-btn spring-btn" id="confirmCancelBtn">Cancel</button>
+        <button type="button" class="primary-btn spring-btn" id="confirmProceedBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       BOTTOM SHEET 5: METRIC & FORMULA EXPLAINER POPUP (ⓘ)
+       ====================================================================== -->
+  <div class="sheet-backdrop" id="infoSheetBackdrop" aria-hidden="true">
+    <div class="sheet-panel" role="dialog" aria-labelledby="infoSheetTitle">
+      <div class="sheet-handle"></div>
+      <div class="sheet-header">
+        <h3 class="sheet-title" id="infoSheetTitle">How This Is Computed</h3>
+        <button type="button" class="icon-btn spring-btn" id="closeInfoSheetBtn" aria-label="Close explainer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div id="infoSheetBody" style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;"></div>
+      <button type="button" class="primary-btn sage-btn spring-btn" id="infoGotItBtn">Got It</button>
+    </div>
+  </div>
+
+  <!-- Main Application Script -->
+  <script src="./app.js" defer></script>
 </body>
 </html>
